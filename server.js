@@ -18,21 +18,22 @@ const tempCard = fs.readFileSync(path.join(__dirname, "templates", "card.html"),
 const tempProduct = fs.readFileSync(path.join(__dirname, "templates", "product.html"), "utf-8")
 
 // Replace template placeholders with actual data
-const replaceTemplate = (temp, product) => {
-  let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName)
-  output = output.replace(/{%IMAGE%}/g, product.image)
-  output = output.replace(/{%PRICE%}/g, product.price)
-  output = output.replace(/{%FROM%}/g, product.from)
-  output = output.replace(/{%ENERGY_SAVINGS%}/g, product.energySavings)
-  output = output.replace(/{%SPECIFICATIONS%}/g, product.specifications)
-  output = output.replace(/{%QUANTITY%}/g, product.quantity)
-  output = output.replace(/{%DESCRIPTION%}/g, product.description)
-  output = output.replace(/{%ID%}/g, product.id)
+const replaceTemplate = (temp, article) => {
+ let output = temp.replace(/{%ARTICLE_TITLE%}/g, article.article);
+  output = output.replace(/{%IMAGE%}/g, article.image);
+  output = output.replace(/{%DATE%}/g, article.date);
+  output = output.replace(/{%AUTHOR%}/g, article.author);
+  output = output.replace(/{%TEXT%}/g, article.text);
+  output = output.replace(/{%THEME%}/g, article.theme);
+  output = output.replace(/{%ID%}/g, article.id);
 
-  if (!product.eco) output = output.replace(/{%NOT_ECO%}/g, "not-eco")
-  else output = output.replace(/{%NOT_ECO%}/g, "")
+  if (article.popular === true || article.popular === "true") {
+    output = output.replace(/{%POPULAR%}/g, "popular");
+  } else {
+    output = output.replace(/{%POPULAR%}/g, "");
+  }
 
-  return output
+  return output;
 }
 
 // Create server
